@@ -20,35 +20,35 @@ You are an AI assistant specializing in writing tests for a Nuxt.js/TypeScript a
 ```typescript
 // Best Practice
 describe('GifGrid', () => {
-describe('Rendering', () => {
-test('correctly displays the grid', () => {
-// test
-})
-})
+  describe('Rendering', () => {
+    test('correctly displays the grid', () => {
+      // test
+    })
+  })
 
-describe('Interactions', () => {
-test('handles clicking', () => {
-// test
-})
-})
+  describe('Interactions', () => {
+    test('handles clicking', () => {
+      // test
+    })
+  })
 })
 ```
 
 ### 3. Assertions
-- Use assertions Clear and descriptive
+- Use assertions clear and descriptive
 - Avoid multiple assertions in a single test
 - Prefer specific assertions over generic ones
 
 ```typescript
 // Best practice
 test('name of the test', () => {
-const { result } = renderComponent(GifGrid, {
-props: {
-}
-})
+  const { result } = renderComponent(GifGrid, {
+    props: {
+    }
+  })
 
-expect(result.findAll('.gif-item')).toHaveLength(3)
-expect(result.text()).toContain('Perceval')
+  expect(result.findAll('.gif-item')).toHaveLength(3)
+  expect(result.text()).toContain('Perceval')
 })
 ```
 
@@ -62,17 +62,17 @@ expect(result.text()).toContain('Perceval')
 ```typescript
 // Composable test example
 describe('useGifSearch', () => {
-test('returns search results', async () => {
-const { search, results } = useGifSearch()
-await search('Perceval')
-expect(results.value).toHaveLength(5)
-})
+  test('returns search results', async () => {
+    const { search, results } = useGifSearch()
+    await search('Perceval')
+    expect(results.value).toHaveLength(5)
+  })
 
-test('handles search errors', async () => {
-const { search, error } = useGifSearch()
-await search('')
-expect(error.value).toBe('Search cannot be empty')
-})
+  test('handles search errors', async () => {
+    const { search, error } = useGifSearch()
+    await search('')
+    expect(error.value).toBe('Search cannot be empty')
+  })
 })
 ```
 
@@ -84,27 +84,27 @@ expect(error.value).toBe('Search cannot be empty')
 ```typescript
 // Component Test Example
 describe('GifCard', () => {
-test('display GIF information', () => {
-const { getByText, getByAltText } = renderComponent(GifCard, {
-props: {
-gif: mockGif
-}
-})
+  test('display GIF information', () => {
+    const { getByText, getByAltText } = renderComponent(GifCard, {
+      props: {
+        gif: mockGif
+      }
+    })
 
-expect(getByText(mockGif.title)).toBeInTheDocument()
-expect(getByAltText(mockGif.description)).toBeInTheDocument()
-})
+    expect(getByText(mockGif.title)).toBeInTheDocument()
+    expect(getByAltText(mockGif.description)).toBeInTheDocument()
+  })
 
-test('emit click event', async () => {
-const { emitted, getByRole } = renderComponent(GifCard, {
-props: {
-gif: mockGif
-}
-})
+  test('emit click event', async () => {
+    const { emitted, getByRole } = renderComponent(GifCard, {
+      props: {
+        gif: mockGif
+      }
+    })
 
-await fireEvent.click(getByRole('button'))
-expect(emitted('click')).toBeTruthy()
-})
+    await fireEvent.click(getByRole('button'))
+    expect(emitted('click')).toBeTruthy()
+  })
 })
 ```
 
@@ -116,15 +116,15 @@ expect(emitted('click')).toBeTruthy()
 ```typescript
 // Example test integration
 describe('GifSearch', () => {
-test('filter and display results', async () => {
-const { getByRole, findAllByTestId } = renderComponent(GifSearch)
+  test('filter and display results', async () => {
+    const { getByRole, findAllByTestId } = renderComponent(GifSearch)
 
-await fireEvent.input(getByRole('searchbox'), 'Perceval')
-await fireEvent.click(getByRole('button', { name: 'Search' }))
+    await fireEvent.input(getByRole('searchbox'), 'Perceval')
+    await fireEvent.click(getByRole('button', { name: 'Search' }))
 
-const results = await findAllByTestId('gif-item')
-expect(results).toHaveLength(5)
-})
+    const results = await findAllByTestId('gif-item')
+    expect(results).toHaveLength(5)
+  })
 })
 ```
 
@@ -138,18 +138,18 @@ expect(results).toHaveLength(5)
 ```typescript
 // Factory example
 const createMockGif = (overrides = {}) => ({
-id: '1',
-title: 'Test GIF',
-description: 'Test description',
-url: 'https://example.com/gif.gif',
-...overrides
+  id: '1',
+  title: 'Test GIF',
+  description: 'Test description',
+  url: 'https://example.com/gif.gif',
+  ...overrides
 })
 
 // API mock example
 vi.mock('~/composables/useApi', () => ({
-useApi: () => ({
-searchGifs: vi.fn().mockResolvedValue([createMockGif()])
-})
+  useApi: () => ({
+    searchGifs: vi.fn().mockResolvedValue([createMockGif()])
+  })
 }))
 ```
 
@@ -168,40 +168,40 @@ searchGifs: vi.fn().mockResolvedValue([createMockGif()])
 ### 1. Navigation Tests
 ```typescript
 describe('Navigation', () => {
-test('redirects to the detail page', async () => {
-const { getByRole } = renderComponent(GifGrid)
-await fireEvent.click(getByRole('link', { name: /View Detail/ }))
-expect(useRouter().push).toHaveBeenCalledWith('/replicas/1')
-})
+  test('redirects to the detail page', async () => {
+    const { getByRole } = renderComponent(GifGrid)
+    await fireEvent.click(getByRole('link', { name: /View Detail/ }))
+    expect(useRouter().push).toHaveBeenCalledWith('/replicas/1')
+  })
 })
 ```
 
 ### 2. Form Tests
 ```typescript
 describe('SearchForm', () => {
-test('validates user input', async () => {
-const { getByRole, getByText } = renderComponent(SearchForm)
+  test('validates user input', async () => {
+    const { getByRole, getByText } = renderComponent(SearchForm)
 
-await fireEvent.input(getByRole('searchbox'), '')
-await fireEvent.submit(getByRole('form'))
+    await fireEvent.input(getByRole('searchbox'), '')
+    await fireEvent.submit(getByRole('form'))
 
-expect(getByText('Search is required')).toBeInTheDocument()
-})
+    expect(getByText('Search is required')).toBeInTheDocument()
+  })
 })
 ```
 ### 3. Performance Testing
 ```typescript
 describe('GifGrid Performance', () => {
-test('load GIFs in an optimized way', async () => {
-const { findAllByTestId } = renderComponent(GifGrid, {
-props: {
-gifs: Array(100).fill(createMockGif())
-}
-})
+  test('load GIFs in an optimized way', async () => {
+    const { findAllByTestId } = renderComponent(GifGrid, {
+      props: {
+        gifs: Array(100).fill(createMockGif())
+      }
+    })
 
-const items = await findAllByTestId('gif-item')
-expect(items).toHaveLength(20) // Check for lazy loading
-})
+    const items = await findAllByTestId('gif-item')
+    expect(items).toHaveLength(20) // Check for lazy loading
+  })
 })
 ```
 
@@ -213,7 +213,7 @@ expect(items).toHaveLength(20) // Check for lazy loading
 - Keep tests up to date with changes
 
 ### 2. Refactoring
-- Refactor tests as Code
+- Refactor tests as code
 - Avoid duplication
 - Use helpers and utilities
 
