@@ -1,6 +1,6 @@
 ---
 description: 
-globs: 
+globs: *.nuxt.test.ts, *.test.ts
 alwaysApply: false
 ---
 # Testing Guidelines
