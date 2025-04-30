@@ -3,6 +3,8 @@ description:
 globs: 
 alwaysApply: false
 ---
+# Using Interfaces for Inheritance
+
 ALWAYS prefer interfaces when modelling inheritance.
 
 The `&` operator has terrible performance in TypeScript. Only use it where `interface extends` is not possible.

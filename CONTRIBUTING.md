@@ -42,8 +42,7 @@ By participating in this project, you agree to maintain a respectful and inclusi
    - `seo/` for SEO related rules
 
 2. Follow the existing file naming conventions:
-   - Use `.mdc` extension for general rules
-   - Use `.md` extension for specific language/framework rules
+   - Use `.mdc` extension
 
 3. Include in your rule:
    - Clear description

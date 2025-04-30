@@ -3,6 +3,8 @@ description:
 globs: 
 alwaysApply: false
 ---
+# Avoiding Default Exports
+
 Unless explicitly required by the framework, do not use default exports.
 
 ```ts

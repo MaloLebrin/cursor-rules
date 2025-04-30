@@ -10,9 +10,9 @@ This repository contains a comprehensive set of rules and best practices establi
 │   ├── architecture-rules.mdc
 │   └── tests-rules.mdc
 ├── typescript/           # TypeScript rules and best practices
-│   ├── any-inside-generic-functions.md
-│   ├── default-exports.md
-│   ├── discriminated-unions.md
+│   ├── any-inside-generic-functions.mdc
+│   ├── default-exports.mdc
+│   ├── discriminated-unions.mdc
 │   └── ...
 ├── seo/                  # SEO optimization rules
 │   └── common.mdc

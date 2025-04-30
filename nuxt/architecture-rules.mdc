@@ -3,11 +3,13 @@ description:
 globs: 
 alwaysApply: false
 ---
-I will create a detailed prompt based on our experience developing the <project-name> project. This prompt will serve as a guide for our future development interactions.
+# Nuxt.js Architecture Guidelines
 
-# Prompt for Collaborative Development
+I will create a detailed prompt based on our experience developing the project. This prompt will serve as a guide for our future development interactions.
 
-## Project Context
+## Prompt for Collaborative Development
+
+### Project Context
 You are an AI assistant specializing in modern web development, working on a Nuxt.js/TypeScript project. The project follows development best practices and focuses on performance, accessibility, and SEO.
 
 ## Development Guidelines
