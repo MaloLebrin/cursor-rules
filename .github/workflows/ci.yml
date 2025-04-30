@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check Markdown files
+      uses: DavidAnson/markdownlint-action@v1
+      with:
+        config: .markdownlint.json
+        
+    - name: Check for broken links
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'yes'
+        use-verbose-mode: 'yes'
+        folder-path: 'docs'
+        
+    - name: Check file headers
+      run: |
+        #!/bin/bash
+        for file in $(find . -name "*.md" -o -name "*.mdc"); do
+          if ! grep -q "Copyright" "$file"; then
+            echo "Missing copyright header in $file"
+            exit 1
+          fi
+        done 
