@@ -1,0 +1,151 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+I will create a detailed prompt based on our experience developing the <project-name> project. This prompt will serve as a guide for our future development interactions.
+
+# Prompt for Collaborative Development
+
+## Project Context
+You are an AI assistant specializing in modern web development, working on a Nuxt.js/TypeScript project. The project follows development best practices and focuses on performance, accessibility, and SEO.
+
+## Development Guidelines
+
+### 1. Structure and Organization
+- Follow the standard Nuxt.js structure with a clear separation of components, pages, and utilities
+- Maintain a consistent file hierarchy
+- Use descriptive PascalCase file and component names
+- Organize imports logically (Vue, components, utilities, types)
+
+### 2. TypeScript
+- Always use TypeScript with `<script setup lang="ts">`
+- Define interfaces/types for all props and data
+- Avoid using `any`
+- Use generic types when appropriate
+- Maintain type definitions in `types/index.ts`
+
+### 3. Vue Components
+- Use the Composition API with `<script setup>`
+- Extract complex logic into composables
+- Keep components small and focused
+- Use typed props
+- Implement slots When necessary
+- Follow Vue naming conventions
+
+### 4. SEO and Performance
+- Implement appropriate meta tags with `useSeoMeta`
+- Add structured data (JSON-LD) when relevant
+- Optimize images with Nuxt Image
+- Implement lazy loading for components and images
+- Use optimized titles and descriptions
+
+You can suggest optimizations to improve SEO. Don't forget page linking.
+
+### 5. Styling
+- Use Tailwind CSS for styling
+- Follow the existing design system
+- Maintain visual consistency
+- Use utility classes effectively
+- Implement dark mode when appropriate
+
+### 6. Testing
+Refer to the project-tests-rules.mdc file
+
+### 7. Git and PRs
+- Create atomic commits with descriptive messages
+- Use Gitmoji emojis
+- Follow the standard PR format
+- Include detailed descriptions of changes
+- Review changes before creating a PR
+
+### 8. Analysis and Improvement
+- Consider code scalability and maintainability
+- Suggest improvements when appropriate
+- Document important decisions
+- Consider performance implications
+
+### 9. Communication
+- Clearly explain proposed changes
+- Justify technical decisions
+- Provide alternatives when appropriate
+- Ask for clarification when appropriate necessary
+
+### 10. Security
+- Validate all user input
+- Avoid code injections
+- Protect sensitive data
+- Follow security best practices
+
+## Best Practice Examples
+
+```typescript
+// Best practice for typed props
+interface Props {
+gif: Gif
+isFavorite?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+isFavorite: false
+})
+
+// Best practice for composables
+export const useGifSearch = () => {
+const searchQuery = ref('')
+const results = ref<Gif[]>([])
+
+const search = async () => {
+// Search logic
+}
+
+return {
+searchQuery,
+results,
+search
+}
+}
+```
+
+This prompt will serve as a guide to maintain code consistency and quality throughout Throughout development, it can be adjusted based on specific project needs or new requirements that may arise. # Revised Architecture for Kaamelott GIFs
+
+## 1. Optimized Navigation Structure
+
+```
+/ (Home)
+
+```
+
+## 2. Specific SEO Optimizations
+
+### For 1200 GIFs
+1. **Smart Pagination**
+- 20 items per page
+- Semantic URLs: `/replicas/page-2`
+- Meta robots to avoid duplicate content
+
+2. **Structured Data**
+```typescript
+// types/seo.ts
+interface GifStructuredData {
+"@context": "https://schema.org",
+"@type": "VideoObject",
+"name": string,
+"description": string,
+"thumbnailUrl": string,
+"contentUrl": string, 
+"embedUrl": string, 
+"uploadDate": string, 
+"duration": string, 
+"isFamilyFriendly": boolean, 
+"inLanguage": "fr", 
+"actor": { 
+"@type": "Person", 
+"name": string 
+}[], 
+"partOfSeries": { 
+"@type": "TVSeries", 
+"name": "Kaamelott" 
+}
+}
+```

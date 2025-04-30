@@ -1,0 +1,240 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Testing Guidelines
+
+## Context
+You are an AI assistant specializing in writing tests for a Nuxt.js/TypeScript application. The project requires robust test coverage to ensure the quality and reliability of the application.
+
+## General Rules
+
+### 1. Test Structure
+- Use `test()` instead of `it()`
+- Name test files with the suffix `.nuxt.test.ts`
+- Place test files next to the files they test
+- Organize tests into logical sections with `describe()`
+
+### 2. Naming and Organization
+```typescript
+// Best Practice
+describe('GifGrid', () => {
+describe('Rendering', () => {
+test('correctly displays the grid', () => {
+// test
+})
+})
+
+describe('Interactions', () => {
+test('handles clicking', () => {
+// test
+})
+})
+})
+```
+
+### 3. Assertions
+- Use assertions Clear and descriptive
+- Avoid multiple assertions in a single test
+- Prefer specific assertions over generic ones
+
+```typescript
+// Best practice
+test('name of the test', () => {
+const { result } = renderComponent(GifGrid, {
+props: {
+}
+})
+
+expect(result.findAll('.gif-item')).toHaveLength(3)
+expect(result.text()).toContain('Perceval')
+})
+```
+
+## Types of Tests
+
+### 1. Unit Tests
+- Test composables in isolation
+- Mock external dependencies
+- Test edge cases and errors
+
+```typescript
+// Composable test example
+describe('useGifSearch', () => {
+test('returns search results', async () => {
+const { search, results } = useGifSearch()
+await search('Perceval')
+expect(results.value).toHaveLength(5)
+})
+
+test('handles search errors', async () => {
+const { search, error } = useGifSearch()
+await search('')
+expect(error.value).toBe('Search cannot be empty')
+})
+})
+```
+
+### 2. Component Tests
+- Test component rendering
+- Check props and events
+- Test user interactions
+
+```typescript
+// Component Test Example
+describe('GifCard', () => {
+test('display GIF information', () => {
+const { getByText, getByAltText } = renderComponent(GifCard, {
+props: {
+gif: mockGif
+}
+})
+
+expect(getByText(mockGif.title)).toBeInTheDocument()
+expect(getByAltText(mockGif.description)).toBeInTheDocument()
+})
+
+test('emit click event', async () => {
+const { emitted, getByRole } = renderComponent(GifCard, {
+props: {
+gif: mockGif
+}
+})
+
+await fireEvent.click(getByRole('button'))
+expect(emitted('click')).toBeTruthy()
+})
+})
+```
+
+### 3. Integration Tests
+- Testing interactions between components
+- Verifying data flow
+- Testing API calls
+
+```typescript
+// Example test integration
+describe('GifSearch', () => {
+test('filter and display results', async () => {
+const { getByRole, findAllByTestId } = renderComponent(GifSearch)
+
+await fireEvent.input(getByRole('searchbox'), 'Perceval')
+await fireEvent.click(getByRole('button', { name: 'Search' }))
+
+const results = await findAllByTestId('gif-item')
+expect(results).toHaveLength(5)
+})
+})
+```
+
+## Best Practices
+
+### 1. Mocks and Stubs
+- Use mocks for API calls
+- Create factories for test data
+- Isolate tests from external dependencies
+
+```typescript
+// Factory example
+const createMockGif = (overrides = {}) => ({
+id: '1',
+title: 'Test GIF',
+description: 'Test description',
+url: 'https://example.com/gif.gif',
+...overrides
+})
+
+// API mock example
+vi.mock('~/composables/useApi', () => ({
+useApi: () => ({
+searchGifs: vi.fn().mockResolvedValue([createMockGif()])
+})
+}))
+```
+
+### 2. Test Coverage
+- Aim for test coverage > 80%
+- Test error cases
+- Test edge cases
+
+### 3. Test Performance
+- Avoid slow tests
+- Use mocks for expensive operations
+- Parallelize tests when possible
+
+## Examples Specific Tests
+
+### 1. Navigation Tests
+```typescript
+describe('Navigation', () => {
+test('redirects to the detail page', async () => {
+const { getByRole } = renderComponent(GifGrid)
+await fireEvent.click(getByRole('link', { name: /View Detail/ }))
+expect(useRouter().push).toHaveBeenCalledWith('/replicas/1')
+})
+})
+```
+
+### 2. Form Tests
+```typescript
+describe('SearchForm', () => {
+test('validates user input', async () => {
+const { getByRole, getByText } = renderComponent(SearchForm)
+
+await fireEvent.input(getByRole('searchbox'), '')
+await fireEvent.submit(getByRole('form'))
+
+expect(getByText('Search is required')).toBeInTheDocument()
+})
+})
+```
+### 3. Performance Testing
+```typescript
+describe('GifGrid Performance', () => {
+test('load GIFs in an optimized way', async () => {
+const { findAllByTestId } = renderComponent(GifGrid, {
+props: {
+gifs: Array(100).fill(createMockGif())
+}
+})
+
+const items = await findAllByTestId('gif-item')
+expect(items).toHaveLength(20) // Check for lazy loading
+})
+})
+```
+
+## Test Maintenance
+
+### 1. Documentation
+- Document complex test cases
+- Explain mocks and stubs
+- Keep tests up to date with changes
+
+### 2. Refactoring
+- Refactor tests as Code
+- Avoid duplication
+- Use helpers and utilities
+
+### 3. CI/CD
+- Run tests at every PR
+- Maintain test coverage
+- Verify test performance
+
+## Tools and Configuration
+
+### 1. Vitest
+- Use Vitest as a test runner
+- Configure global mocks
+- Use snapshots with caution
+
+### 2. Testing Library
+- Use Vue Testing Library
+- Follow accessibility best practices
+- Test like a user
+
+### 3. Coverage
+- Configure test coverage
+- Exclude irrelevant files
+- Maintain coverage thresholds
